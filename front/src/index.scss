@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #282c34;
+  background-color: #101111;
   color: white;
 
 }
@@ -31,7 +31,9 @@ textarea, input {
   border: solid grey 1px;
   padding: 10px 20px;
   border-radius: 25px;
-  width: max-content;  
+  width: max-content;
+  box-shadow: 0px 4px 6px black;
+
   &:hover {
       border-color: white;
       cursor: pointer;

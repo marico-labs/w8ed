@@ -1,10 +1,13 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useNavigate, useLocation, useHref } from 'react-router-dom';
 
 import { FaBeer, FaBookOpen, FaHatWizard, FaFlask } from 'react-icons/fa';
+import {MdExplore} from "react-icons/md"
 import { GiFairyWand, GiThorHammer } from 'react-icons/gi';
 import { spaces } from '@pages/Space/spaces';
 import './Sidebar.scss';
+import { db } from "../../utils/firebase"
+import { onValue, ref } from "firebase/database";
 
 interface SpellBarIconProps extends React.HTMLAttributes<HTMLElement> {
   icon?: React.ReactNode;
@@ -15,36 +18,57 @@ interface SpellBarIconProps extends React.HTMLAttributes<HTMLElement> {
 
 const SpellBarIcon:FC<SpellBarIconProps> = ({icon, tooltip, page}) => {
   const navigate = useNavigate();
-  // const location = useLocation().pathname.substring(1);
+  const location = useLocation().pathname.substring(1);
   // const location = useLocation();
 
   const handleRedirect = (page: string) => {
     // console.log(page);
     navigate(page)
   }
-  // console.log("location: ", location);
-
+  console.log("location:", location, page.slice(1, page.length), location === page.slice(1, page.length));
   return (
-    <div onClick={(event: React.MouseEvent<HTMLElement>) => handleRedirect(page)} className={`sidebar-icon`}>
+    <div onClick={(event: React.MouseEvent<HTMLElement>) => handleRedirect(page)} className={`sidebar-icon ${location === page.slice(1, page.length) ? 'highlited' : ''}`}>
     {/* <div onClick={(event: React.MouseEvent<HTMLElement>) => handleRedirect(page)} className={`sidebar-icon group ${location === page ? 'highlited' : ''}`}> */}
+      <div id="marker"/>
       {icon}
-      {/* <span className="sidebar-tooltip group-hover:scale-100"> */}
-      {/* {tooltip} */}
-      {/* // </span>  */}
+      <span className="sidebar-tooltip">
+      {tooltip}
+      </span> 
     </div>
   );
 }
-  
+
 const SpellBar:FC = () => {
+  const [joined, setJoined] = useState<any>()
+  const [spaces, setSpaces] = useState<any>()  
+
+  useEffect(() => {
+    
+    const query = ref(db, `Users/me/joined`)
+    const queryObject = ref(db, `Spaces/`)
+    onValue(queryObject, (snapshot) => {
+      const data = snapshot.val()
+      setSpaces(data)
+    })
+    return(onValue(query, (snapshot) => {
+      const data = snapshot.val()
+      setJoined(data)
+    }))
+  }, [])
 
   return (
+    <div id="sidebar-wrapper">
     <div className="sidebar-container">
-        <SpellBarIcon icon={<FaHatWizard/>} tooltip={"profile"} page={"/"} />
-        <SpellBarIcon icon={<img src={spaces[0].imageUrl}/>} tooltip={"quest"} page={"/space/1"} />
-        <SpellBarIcon icon={<img src={spaces[0].imageUrl}/>} tooltip={"tavern"} page={"/space/1"} />
-        <SpellBarIcon icon={<img src={spaces[0].imageUrl}/>} tooltip={"potion"} page={"/space/1"} />
-        <SpellBarIcon icon={<img src={spaces[0].imageUrl}/>} tooltip={"home"} page={"/space/1"} />
-        <SpellBarIcon icon={<img src={spaces[0].imageUrl}/>} tooltip={"forge"} page={"/space/1"} />
+        <SpellBarIcon icon={<MdExplore/>} tooltip={"Discover"} page={"/"} />
+        {joined && spaces && Object.keys(joined).map((index :any) => {
+          const space = spaces[joined[index]]
+          return space ? 
+          <SpellBarIcon icon={<img className= "logo" src={space.Image}/>} tooltip={space.Name} page={`/space/${joined[index]}`}/>
+          : <></>
+        })}
+
+    </div>
+
     </div>
   );
 };

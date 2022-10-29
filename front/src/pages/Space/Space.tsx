@@ -1,27 +1,38 @@
 import Topbar from "@components/Topbar/Topbar";
 import Sidebar from "@components/Sidebar/Sidebar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProposalPreview from "../Proposal/ProposalPreview";
 import QuizzPreview from "../Quizz/QuizzPreview";
 import "./Space.scss";
 import SpacePreview from "./SpacePreview";
 import { useParams } from "react-router-dom";
+import { db } from "../../utils/firebase"
+import { onValue, ref } from "firebase/database";
 
 export default function Space() {
-  const { id } = useParams();
+    const { id } = useParams();
     const [showQuizz, setShowQuizz] = useState(true);
     const [showProposal, setShowProposal] = useState(true);
-    console.log(id)
+    const [space, setSpace] = useState<any>(null)
+
+    useEffect(() => {
+      console.log(id)
+      const query = ref(db, `Spaces/${id}`)
+      return(onValue(query, (snapshot) => {
+        const data = snapshot.val()
+        setSpace(data)
+      }))
+    }, [id])
+
   return (
     <div id="space-container">
-      <Topbar />
-      <Sidebar/>
-
-      <SpacePreview
-        imageUrl="https://i.pinimg.com/originals/4b/52/17/4b5217cc5d784890f44aeb01a5ad7db6.png"
-        name="pepe"
-        users={70000}
+      {space && <SpacePreview
+        imageUrl={space.Image}
+        name={space.Name}
+        users={space.Users}
+        id={id ? parseInt(id) : 0}
       />
+      }
       <div id="actions-container">
         <hr/>
         <h1>Live</h1>

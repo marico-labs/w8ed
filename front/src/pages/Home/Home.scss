@@ -1,9 +1,15 @@
 #home-wrapper{
     width: 100vw;
     height: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 40px;
 }
 
 #search-wrapper{
+    
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -12,12 +18,38 @@
     }
 }
 
+#category-container{
+    #category-header{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        & > * {
+            margin: 0 10px 0 10px;
+            pointer-events: none;
+        }
+    }
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+}
+
+#dropDown{
+    svg{
+        transform: rotate(-90deg);
+    }
+}
+
 #space-previews-tab{
     display: flex;
-    margin: 10vw 0 0 50px;
+    margin: 2vw 0 0 50px;
     width: 80vw;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
     & > * {
         margin: 10px;
     }

@@ -1,10 +1,14 @@
 import { useState } from "react";
-import { useAccount, useConnect, useDisconnect } from "wagmi";
+import { useAccount, useConnect, useDisconnect, useEnsAddress, useEnsName} from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import "./Topbar.scss";
 
 export default function Topbar() {
   const { address, isConnected } = useAccount();
+  const { data, isError, isLoading } = useEnsName({
+    address: address,
+  })
+
   const { connect } = useConnect({
     connector: new InjectedConnector(),
   });
@@ -18,8 +22,9 @@ export default function Topbar() {
   };
 
   const disconnectToAddress = () => {
-    setConnectedText(`${address?.slice(0, 3)}...
-    ${address?.slice(address.length - 4, address.length - 1)}`);
+    const littleAdd = `${address?.slice(0, 3)}...
+    ${address?.slice(address.length - 4, address.length - 1)}`
+    setConnectedText( data ? data : littleAdd);
   };
   return (
     <div id="top-bar-container">

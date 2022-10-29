@@ -1,8 +1,9 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./QuizzPreview.scss";
 
 export default function QuizzPreview() {
   const navigate = useNavigate();
+  const location = useLocation().pathname.substring(1);
 
 
   return (

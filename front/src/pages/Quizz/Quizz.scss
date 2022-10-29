@@ -1,4 +1,87 @@
 #quizz-container{
     width: 100vw;
     height: 100vh;
+    background-color: black;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 100;
+    position: absolute;
+    h2, div{
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    #chronometer{
+        position: absolute;
+        height: 20px;
+        width: 100vw;
+        top: 0;
+        z-index: 23;
+
+        div{
+            // width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                rgba(207, 0, 255, 1) 0%,
+                rgba(94, 9, 121, 1) 28%,
+                rgba(3, 3, 191, 1) 70%,
+                rgba(0, 212, 255, 1) 100%
+            );
+        }
+    }
+    #main-text{
+        max-width: 80vw;
+        text-align: center;
+        position: absolute;
+        top: 20vh;
+        mix-blend-mode: difference;
+        z-index: 20;
+        pointer-events: none;
+    }
+    #choices-container{
+        width: 100vw;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        & > div {
+            height: 100vh;
+            width: var(--nbResp);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 120px;
+
+            &:hover{
+                cursor: pointer;
+                transform: scale(1.2);
+                z-index: 3;
+                h2{
+                    background: linear-gradient(
+                        90deg,
+                        rgba(207, 0, 255, 1) 0%,
+                        rgba(94, 9, 121, 1) 28%,
+                        rgba(3, 3, 191, 1) 70%,
+                        rgba(0, 212, 255, 1) 100%
+                    );
+                    background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                }
+
+            }
+        }
+        & :nth-child(2n){
+            background-color: white;
+            color: black;
+        }
+    }
+    // #responses-container:nth-child(odd){
+    //     background-color: white;
+    // }
 }
