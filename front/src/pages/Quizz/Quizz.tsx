@@ -1,5 +1,4 @@
 import React from "react"
-import {quizz} from "./quizz"
 
 export default function Quizz(){
     return(

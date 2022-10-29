@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useAccount, useConnect, useDisconnect } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
-import "./TopBar.scss";
+import "./Topbar.scss";
 
-export default function TopBar() {
+export default function Topbar() {
   const { address, isConnected } = useAccount();
   const { connect } = useConnect({
     connector: new InjectedConnector(),

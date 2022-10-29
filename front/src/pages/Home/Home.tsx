@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./Home.scss";
 import SpacePreview from "../Space/SpacePreview";
+import Topbar from "@components/Topbar/Topbar";
+import Sidebar from "@components/Sidebar/Sidebar";
 import { spaces } from "../Space/spaces";
 
 export default function Home() {
@@ -13,6 +15,9 @@ export default function Home() {
   console.log(search.toLowerCase())
   return (
     <div id="home-wrapper">
+      <Topbar />
+      <Sidebar/>
+
       <div id="search-wrapper">
         <div id="search-bar-container" className="border-hovering">
           <input type="text" placeholder="Search" onChange={changeSearch}/>

@@ -1,9 +1,11 @@
 #top-bar-container{
     height: 70px;
+    position: fixed;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: end;
+    right: 10px;
 }
 
 #connected-wrapper{

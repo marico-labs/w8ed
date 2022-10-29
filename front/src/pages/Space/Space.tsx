@@ -1,14 +1,22 @@
+import Topbar from "@components/Topbar/Topbar";
+import Sidebar from "@components/Sidebar/Sidebar";
 import { useState } from "react";
 import ProposalPreview from "../Proposal/ProposalPreview";
 import QuizzPreview from "../Quizz/QuizzPreview";
 import "./Space.scss";
 import SpacePreview from "./SpacePreview";
+import { useParams } from "react-router-dom";
 
 export default function Space() {
+  const { id } = useParams();
     const [showQuizz, setShowQuizz] = useState(true);
     const [showProposal, setShowProposal] = useState(true);
+    console.log(id)
   return (
     <div id="space-container">
+      <Topbar />
+      <Sidebar/>
+
       <SpacePreview
         imageUrl="https://i.pinimg.com/originals/4b/52/17/4b5217cc5d784890f44aeb01a5ad7db6.png"
         name="pepe"
