@@ -1,0 +1,30 @@
+#space-preview-container {
+    width: 200px;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    #space-image {
+        margin-top: 20px;
+        width: 110px;
+        height: 110px;
+        border-radius: 50%;
+        padding: 10px;
+        background-color:black;
+    }
+    img{
+        background-color: transparent !important;
+    }
+    h2 {
+        margin: 0;
+        padding: 0;
+    }
+    p {
+        margin: 0;
+        padding: 10px;
+        color: gray;
+    }
+}
+
+

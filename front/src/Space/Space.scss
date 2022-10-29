@@ -1,0 +1,19 @@
+#space-container{
+    width: 80vw;
+    margin-left: 10vw;
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: space-around;
+    #actions-container{
+        &> *{
+            margin-bottom: 20px;
+        }
+        .space-actions{
+            width: 50vw;
+        }
+        // #sp2{
+        //     margin-top: 50px;
+        // }
+    }
+}
