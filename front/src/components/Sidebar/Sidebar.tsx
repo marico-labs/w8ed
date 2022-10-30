@@ -25,7 +25,6 @@ const SpellBarIcon:FC<SpellBarIconProps> = ({icon, tooltip, page}) => {
     // console.log(page);
     navigate(page)
   }
-  console.log("location:", location, page.slice(1, page.length), location === page.slice(1, page.length));
   return (
     <div onClick={(event: React.MouseEvent<HTMLElement>) => handleRedirect(page)} className={`sidebar-icon ${location === page.slice(1, page.length) ? 'highlited' : ''}`}>
     {/* <div onClick={(event: React.MouseEvent<HTMLElement>) => handleRedirect(page)} className={`sidebar-icon group ${location === page ? 'highlited' : ''}`}> */}

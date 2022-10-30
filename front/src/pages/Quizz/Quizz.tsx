@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { questions } from "./questions";
 import "./Quizz.scss";
-import { useSignMessage } from "wagmi";
+import { useAccount, useSignMessage } from "wagmi";
 import { useNavigate } from "react-router-dom";
-
+import { ethers } from "ethers";
 const setProp = (ref: any, prop: string, value: string) =>
   ref?.current?.style.setProperty(prop, value);
 
@@ -13,6 +13,8 @@ var interval: any;
 
 export default function Quizz() {
   const navigate = useNavigate();
+  const { address, isConnected } = useAccount();
+
   const [state, setState] = useState<number>(-1);
   const [text, setText] = useState<string>("Click anywhere if you are ready");
   const [choices, setChoices] = useState<string[] | null>(null);
@@ -20,9 +22,9 @@ export default function Quizz() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [time, setTime] = useState(10000);
   const [questionIndex, setQuestionIndex] = useState(0);
-
+  const [message, setMessage] = useState<string>();
   const { data, isError, isLoading, isSuccess, signMessage } = useSignMessage({
-    message: responses,
+    message: message,
     onSuccess(data) {
         navigate("/")
       },
@@ -37,6 +39,12 @@ export default function Quizz() {
     setText("Sign your responses to proceed.");
     setTime(0);
     setState(1);
+    const pack = ethers.utils.solidityPack(
+        ["address", "uint256"],
+        [address, 0]
+      );
+    const mess = ethers.utils.solidityKeccak256(["bytes"], [pack]);
+    setMessage(mess)
     console.log("finished", responses);
   };
 
@@ -91,13 +99,11 @@ export default function Quizz() {
     newQuestion();
   };
 
-//   const signMessageAndQuit = async () => {
-//     await signMessage();
-//     console.log(isSuccess)
-//     if (isSuccess) {
-//         navigate("/")
-//     }
-//   };
+  const signMessageAndQuit = async () => {
+
+    signMessage()
+
+  };
 
   return (
     <div id="quizz-container" onClick={onContainerClick} ref={containerRef}>
@@ -116,7 +122,7 @@ export default function Quizz() {
           })}
         </div>
       )}
-      {state == 1 && <h2 onClick={() => signMessage()}>SIGN</h2>}
+      {state == 1 && <h2 id="sign" onClick={signMessageAndQuit}>SIGN</h2>}
     </div>
   );
 }

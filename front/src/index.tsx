@@ -4,7 +4,7 @@ import {
   createBrowserRouter,
   RouterProvider,
   useRouteError,
-  Outlet
+  Outlet,
 } from "react-router-dom";
 import { WagmiConfig, createClient } from "wagmi";
 import { getDefaultProvider } from "ethers";
@@ -31,7 +31,7 @@ const Layout = () => (
   <>
     <TopBar />
     <SideBar />
-    <Outlet/>
+    <Outlet />
   </>
 );
 const router = createBrowserRouter([
@@ -55,21 +55,27 @@ const router = createBrowserRouter([
         loader: ({ params }) => {},
         errorElement: <ErrorBoundary />,
         element: <Space />,
+        children: [
+
+        ],
+
       },
       {
-        path: "/quizz/:id",
-        loader: ({ params }) => {},
-        errorElement: <ErrorBoundary />,
         element: <Quizz />,
+        path: "/quizz/:id",
+        // loader: ({ params }) => {},
+        errorElement: <ErrorBoundary />,
       },
       {
-        path: "/proposal/:id",
-        loader: ({ params }) => {},
-        errorElement: <ErrorBoundary />,
         element: <Proposal />,
+        path: "/proposal/:id",
+        // loader: ({ params }) => {
+        //   console.log(params)
+        // },
+        errorElement: <ErrorBoundary />,
       },
-    ]
-  }
+    ],
+  },
 ]);
 
 const client = createClient({

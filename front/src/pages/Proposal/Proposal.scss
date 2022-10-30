@@ -1,0 +1,107 @@
+#proposal-container{
+    width: 60vw;
+    margin-left: 20vw;
+    margin-top: 10vh;
+    background-color: rgb(29, 28, 31);
+    padding: 30px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    h1, #proposal-sender{
+        width: 100%;
+    }
+
+    > *{
+        margin: 10px;
+    }
+}
+
+#state-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: flex-start;
+    > * {
+        margin: 0 10px 0 10px;
+    }
+    .state{
+        padding: 5px 15px;
+        border-radius: 10px;
+
+    }
+    #closed{
+        background: red;
+    }
+    #opened{
+        background: greenyellow;
+    }
+}
+
+#vote-container{
+    width: 50%;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    > *{
+        margin: 10px 0 10px 0;
+    }
+    hr{
+      width: 100%;
+      size: 1px;
+      border: 1px solid rgb(128, 128, 128);
+      
+    }
+    .proposal-choice{
+        width: 80%;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: row;
+        div{
+            margin-left: 10px;
+        }
+        svg{
+            opacity: 0;
+        }
+    }
+    .chosen{
+        border: solid 2px white;
+        svg{
+            opacity: 1;
+        }
+    }
+    #vote-button{
+        font-size: 1.5rem;
+        padding: 4px 20px;
+        border-radius: 10px;
+        background-color: rgb(43, 43, 43);
+    }
+    .colored{
+        background: -moz-linear-gradient(
+            90deg,
+            rgba(207, 0, 255, 1) 0%,
+            rgba(94, 9, 121, 1) 28%,
+            rgba(3, 3, 191, 1) 70%,
+            rgba(0, 212, 255, 1) 100%
+        );
+        background: -webkit-linear-gradient(
+            90deg,
+            rgba(207, 0, 255, 1) 0%,
+            rgba(94, 9, 121, 1) 28%,
+            rgba(3, 3, 191, 1) 70%,
+            rgba(0, 212, 255, 1) 100%
+        );
+        background: linear-gradient(
+            90deg,
+            rgba(207, 0, 255, 1) 0%,
+            rgba(94, 9, 121, 1) 28%,
+            rgba(3, 3, 191, 1) 70%,
+            rgba(0, 212, 255, 1) 100%
+        );
+    }
+  }
+  
+

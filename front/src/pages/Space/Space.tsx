@@ -6,41 +6,70 @@ import QuizzPreview from "../Quizz/QuizzPreview";
 import "./Space.scss";
 import SpacePreview from "./SpacePreview";
 import { useParams } from "react-router-dom";
-import { db } from "../../utils/firebase"
+import { db } from "../../utils/firebase";
 import { onValue, ref } from "firebase/database";
 
 export default function Space() {
-    const { id } = useParams();
-    const [showQuizz, setShowQuizz] = useState(true);
-    const [showProposal, setShowProposal] = useState(true);
-    const [space, setSpace] = useState<any>(null)
+  const { id } = useParams();
+  const [showQuizz, setShowQuizz] = useState(true);
+  const [showProposal, setShowProposal] = useState(true);
+  const [space, setSpace] = useState<any>(null);
 
-    useEffect(() => {
-      console.log(id)
-      const query = ref(db, `Spaces/${id}`)
-      return(onValue(query, (snapshot) => {
-        const data = snapshot.val()
-        setSpace(data)
-      }))
-    }, [id])
+  useEffect(() => {
+    console.log(id);
+    const query = ref(db, `Spaces/${id}`);
+    return onValue(query, (snapshot) => {
+      const data = snapshot.val();
+      console.log(data);
+      setSpace(data);
+    });
+  }, [id]);
 
   return (
     <div id="space-container">
-      {space && <SpacePreview
-        imageUrl={space.Image}
-        name={space.Name}
-        users={space.Users}
-        id={id ? parseInt(id) : 0}
-      />
-      }
+      {space && (
+        <SpacePreview
+          imageUrl={space.Image}
+          name={space.Name}
+          users={space.Users}
+          id={id ? parseInt(id) : 0}
+        />
+      )}
       <div id="actions-container">
-        <hr/>
         <h1>Live</h1>
-        <div id="sp1" className="border-hovering space-actions" onClick={() => setShowQuizz(!showQuizz)}>Quizz</div>
+        <div
+          id="sp1"
+          className="border-hovering space-actions"
+          onClick={() => setShowQuizz(!showQuizz)}
+        >
+          <div>Quizz</div>
+          
+        </div>
         {showQuizz && <QuizzPreview />}
-        <div id="sp2" className="border-hovering space-actions" onClick={() => setShowProposal(!showProposal)}>Proposals</div>
-        {showProposal && <ProposalPreview description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus mi ipsum, facilisis a dapibus ut, interdum quis magna. Nunc vel purus ligula. Nam a dignissim nibh, aaaaaaaaaaaaaaaaVivamus vulputate ornare arcu ut facilisis. Morbi nec mi pretium, lacinia metus vel, euismod sapien. Aliquam erat volutpat ." />}
-        <hr/>
+        <div
+          id="sp2"
+          className="border-hovering space-actions"
+          onClick={() => setShowProposal(!showProposal)}
+        >
+          Proposals
+        </div>
+        {showProposal &&
+          space &&
+          space.Proposals &&
+          Object.keys(space.Proposals).map((index: any) => {
+            const proposal = space.Proposals[index];
+            if (proposal.state !== "closed")
+              return (
+                <ProposalPreview
+                  description={proposal.description}
+                  title={proposal.title}
+                  id={index}
+                  space_id={parseInt(id ? id : "")}
+                />
+              );
+            else return <></>;
+          })}
+        <hr />
         <h1>Historic</h1>
       </div>
     </div>
